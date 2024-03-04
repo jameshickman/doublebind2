@@ -19,7 +19,8 @@
             }
         </style>
         <div id="widget">
-            <button class="__bind_add_row border-solid border-2 border-gray-600 p-2 mx-2 rounded-md">Add a row</button>
+            <button class="__bind_init_table border-2 border-gray-600 p-2 mx-2 rounded-md">Init Tabe</button>
+            <button class="__bind_add_row border-solid border-2 border-gray-600 p-2 mx-2 rounded-md" disabled="true">Add a row</button>
             <button class="__bind_test_button border-solid border-2 border-gray-600 p-2 mx-2 rounded-md">test</button>
             <button class="__bind_set_check border-solid border-2 border-gray-600 p-2 mx-2 rounded-md">Check checkbox</button>
             <button class="__bind_set_uncheck border-solid border-2 border-gray-600 p-2 mx-2 rounded-md">Uncheck</button>
@@ -64,31 +65,45 @@
         </div>
     </body>
     <script>
+        const rows = [
+            {
+                "col1": new DOMrepeaterValue().set_value("First column"),
+                "col2": new DOMrepeaterValue().set_value("Second column").set_class("highlighted")
+            },
+            {
+                "col1": new DOMrepeaterValue().set_value("Another row").set_class("highlighted"),
+                "col2": new DOMrepeaterValue().set_value("Second row, second column")
+                .set_handler("click", (e) => {
+                    alert("Table cell clicked");
+                }).set_class("clickable").set_dataset({"name": "something", "secret": "key"})
+            }
+        ];
         const mutator = new DOMbinder(
             document.getElementById('widget'),
             {
-                "add_row":
+                "init_table":
                 [
                     {
                         "event": "click",
                         "fctn": (e) => {
-                            mutator.set_repeater(
-                                "table",
-                                [
-                                    {
-                                        "col1": new DOMrepeaterValue().set_value("First column"),
-                                        "col2": new DOMrepeaterValue().set_value("Second column").set_class("highlighted")
-                                    },
-                                    {
-                                        "col1": new DOMrepeaterValue().set_value("Another row").set_class("highlighted"),
-                                        "col2": new DOMrepeaterValue().set_value("Second row, second column")
-                                        .set_handler("click", (e) => {
-                                            alert("Table cell clicked");
-                                        }).set_class("clickable").set_dataset({"name": "something", "secret": "key"})
-                                    }
-                                ]
+                            mutator.set_repeater("table", rows)
+                            .set_properties("add_row", {"disabled": false})
+                            .go_live()
+                            .render();
+                        }
+                    }
+                ],
+                "add_row": [
+                    {
+                        "event": "click",
+                        "fctn": (e) => {
+                            rows.push(
+                                {
+                                    "col1": new DOMrepeaterValue().set_value(Math.random().toString()),
+                                    "col2": new DOMrepeaterValue().set_value(Math.random().toString())
+                                }
                             );
-                            mutator.render();
+                            mutator.set_repeater("table", rows).render();
                         }
                     }
                 ],
@@ -127,7 +142,6 @@
                 ]
             }
         );
-        mutator.go_live();
 
         mutator.set_value('text_element', 'Some text');
         mutator.set_properties('text_element', {'id': 'text-line-id'});

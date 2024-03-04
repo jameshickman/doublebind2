@@ -144,11 +144,10 @@
             }
         );
 
-        mutator.set_value('text_element', 'Some text');
-        mutator.set_properties('text_element', {'id': 'text-line-id'});
-        mutator.set_value('select_test', 'yes');
-        mutator.set_value('select_multi', ['a', 'c']);
-
-        mutator.render();
+        mutator.set_value('text_element', 'Some text')
+        .set_properties('text_element', {'id': 'text-line-id'})
+        .set_value('select_test', 'yes')
+        .set_value('select_multi', ['a', 'c'])
+        .render();
     </script>
 </html>

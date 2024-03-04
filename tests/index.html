@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>Test</title>
-        <script src="../lib/mutator.js"></script>
+        <script src="../lib/doublebind_mutator.js"></script>
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
     <body class="font-sans p-5">
@@ -64,7 +64,7 @@
         </div>
     </body>
     <script>
-        const mutator = new DOMmutator(
+        const mutator = new DOMbinder(
             document.getElementById('widget'),
             {
                 "add_row":

@@ -88,6 +88,7 @@
                         "fctn": (e) => {
                             mutator.set_repeater("table", rows)
                             .set_properties("add_row", {"disabled": false})
+                            .set_properties("init_table", {"disabled": true})
                             .go_live()
                             .render();
                         }

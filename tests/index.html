@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Test</title>
+        <script src="../lib/mutator.js"></script>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="font-sans p-5">
+        <style>
+            .highlighted {
+                color: red;
+            }
+            .clickable {
+                color: blue;
+                cursor: pointer;
+            }
+            .__template {
+                display: none;
+            }
+        </style>
+        <div id="widget">
+            <button class="__bind_add_row border-solid border-2 border-gray-600 p-2 mx-2 rounded-md">Add a row</button>
+            <button class="__bind_test_button border-solid border-2 border-gray-600 p-2 mx-2 rounded-md">test</button>
+            <button class="__bind_set_check border-solid border-2 border-gray-600 p-2 mx-2 rounded-md">Check checkbox</button>
+            <button class="__bind_set_uncheck border-solid border-2 border-gray-600 p-2 mx-2 rounded-md">Uncheck</button>
+            <input type="checkbox" class="__bind_checkbox" id="checkbox-widget m-1" /><label for="checkbox-widget">Checkbox</label>
+            <table class="border-solid border-2 border-gray-600 m-2">
+                <tbody class="__bind_table">
+                    <tr class="__template" data-name="table">
+                        <td class="__bind_col1 border border-gray-600 m-1 p-1"></td>
+                        <td class="__bind_col2 border border-gray-600 m-1 p-1"></td>
+                    </tr>
+                    <tr class="__placeholder">
+                        <td class="border border-gray-600 m-1 p-1">Placeholder...</td>
+                        <td class="border border-gray-600 m-1 p-1">Placeholder...</td>
+                    </tr>
+                    <tr class="__placeholder">
+                        <td class="border border-gray-600 m-1 p-1">Placeholder...</td>
+                        <td class="border border-gray-600 m-1 p-1">Placeholder...</td>
+                    </tr>
+                    <tr class="__placeholder">
+                        <td class="border border-gray-600 m-1 p-1">Placeholder...</td>
+                        <td class="border border-gray-600 m-1 p-1">Placeholder...</td>
+                    </tr>
+                    <tr class="__placeholder">
+                        <td class="border border-gray-600 m-1 p-1">Placeholder...</td>
+                        <td class="border border-gray-600 m-1 p-1">Placeholder...</td>
+                    </tr>
+                </tbody>
+            </table>
+            <form>
+                <input type="text" class="__bind_text_element border border-gray-300 rounded-sm" /><br/>
+                <select class="__bind_select_test">
+                    <option value="">Select</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select><br/>
+                <select multiple="true" class="__bind_select_multi">
+                    <option value="a">A</option>
+                    <option value="b">B</option>
+                    <option value="c">C</option>
+                </select>
+            </form>
+        </div>
+    </body>
+    <script>
+        const mutator = new DOMmutator(
+            document.getElementById('widget'),
+            {
+                "add_row":
+                [
+                    {
+                        "event": "click",
+                        "fctn": (e) => {
+                            mutator.set_repeater(
+                                "table",
+                                [
+                                    {
+                                        "col1": new DOMrepeaterValue().set_value("First column"),
+                                        "col2": new DOMrepeaterValue().set_value("Second column").set_class("highlighted")
+                                    },
+                                    {
+                                        "col1": new DOMrepeaterValue().set_value("Another row").set_class("highlighted"),
+                                        "col2": new DOMrepeaterValue().set_value("Second row, second column")
+                                        .set_handler("click", (e) => {
+                                            alert("Table cell clicked");
+                                        }).set_class("clickable").set_dataset({"name": "something", "secret": "key"})
+                                    }
+                                ]
+                            );
+                            mutator.render();
+                        }
+                    }
+                ],
+                "test_button": 
+                [
+                    {
+                        "event": "click",
+                        "fctn": (e) => {
+                            console.log("Test button clicked");
+                        }
+                    }
+                ],
+                "set_check": [
+                    {
+                        "event": "click",
+                        "fctn": (e) => {
+                            mutator.set_value("checkbox", true).render();
+                        }
+                    }
+                ],
+                "set_uncheck": [
+                    {
+                        "event": "click",
+                        "fctn": (e) => {
+                            mutator.set_value("checkbox", false).render();
+                        }
+                    }
+                ],
+                "checkbox": [
+                    {
+                        "event": "change",
+                        "fctn": (e) => {
+                            alert("Checkbox changed");
+                        }
+                    }
+                ]
+            }
+        );
+        mutator.go_live();
+
+        mutator.set_value('text_element', 'Some text');
+        mutator.set_properties('text_element', {'id': 'text-line-id'});
+        mutator.set_value('select_test', 'yes');
+        mutator.set_value('select_multi', ['a', 'c']);
+
+        mutator.render();
+    </script>
+</html>

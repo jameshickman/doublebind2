@@ -49,6 +49,24 @@
                     </tr>
                 </tbody>
             </table>
+            <table>
+                <tbody class="__bind_form_table">
+                    <tr class="__template" data-name="form_table">
+                        <td><input type="text" class="__bind_repeater_test_text" name="repeater_test_text" /></td>
+                        <td>
+                            <select class="__bind_repeater_select" name="repeater_select">
+                                <option value="">Unselected</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                        </td>
+                        <td>
+                            <textarea class="__bind_repeater_textarea" name="repeater_textarea"></textarea>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
             <form>
                 <input type="text" class="__bind_text_element border border-gray-300 rounded-sm" name="text_element" /><br/>
                 <select class="__bind_select_test" name="select_test">
@@ -78,6 +96,23 @@
                 }).set_class("clickable").set_dataset({"name": "something", "secret": "key"})
             }
         ];
+        const form_rows = [
+            {
+                'repeater_test_text': new DOMrepeaterValue().set_value("First text"),
+                'repeater_select': new DOMrepeaterValue().set_value("3"),
+                'repeater_textarea': new DOMrepeaterValue().set_value("First texts")
+            },
+            {
+                'repeater_test_text': new DOMrepeaterValue().set_value("Second text"),
+                'repeater_select': new DOMrepeaterValue().set_value("2"),
+                'repeater_textarea': new DOMrepeaterValue().set_value("First texts")
+            },
+            {
+                'repeater_test_text': new DOMrepeaterValue().set_value("Third text"),
+                'repeater_select': new DOMrepeaterValue().set_value("1"),
+                'repeater_textarea': new DOMrepeaterValue().set_value("Third texts")
+            }
+        ]
         const mutator = new DOMbinder(
             document.getElementById('widget'),
             {
@@ -87,6 +122,7 @@
                         "event": "click",
                         "fctn": (e) => {
                             mutator.set_repeater("table", rows)
+                            .set_repeater("form_table", form_rows)
                             .set_properties("add_row", {"disabled": false})
                             .set_properties("init_table", {"disabled": true})
                             .go_live()

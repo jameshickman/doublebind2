@@ -24,7 +24,7 @@
             <button class="__bind_test_button border-solid border-2 border-gray-600 p-2 mx-2 rounded-md">test</button>
             <button class="__bind_set_check border-solid border-2 border-gray-600 p-2 mx-2 rounded-md">Check checkbox</button>
             <button class="__bind_set_uncheck border-solid border-2 border-gray-600 p-2 mx-2 rounded-md">Uncheck</button>
-            <input type="checkbox" class="__bind_checkbox m-1" id="checkbox-widget" /><label for="checkbox-widget">Checkbox</label>
+            <input type="checkbox" class="__bind_checkbox m-1" id="checkbox-widget" name="checkbox" /><label for="checkbox-widget">Checkbox</label>
             <table class="border-solid border-2 border-gray-600 m-2">
                 <tbody class="__bind_table">
                     <tr class="__template" data-name="table">
@@ -50,13 +50,13 @@
                 </tbody>
             </table>
             <form>
-                <input type="text" class="__bind_text_element border border-gray-300 rounded-sm" /><br/>
-                <select class="__bind_select_test">
+                <input type="text" class="__bind_text_element border border-gray-300 rounded-sm" name="text_element" /><br/>
+                <select class="__bind_select_test" name="select_test">
                     <option value="">Select</option>
                     <option value="yes">Yes</option>
                     <option value="no">No</option>
                 </select><br/>
-                <select multiple="true" class="__bind_select_multi">
+                <select multiple="true" class="__bind_select_multi" name="select_multi">
                     <option value="a">A</option>
                     <option value="b">B</option>
                     <option value="c">C</option>

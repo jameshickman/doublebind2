@@ -20,7 +20,7 @@
         </style>
         <div id="widget">
             <button class="__bind_init_table border-2 border-gray-600 p-2 mx-2 rounded-md">Init Table</button>
-            <button class="__bind_add_row border-solid border-2 border-gray-600 p-2 mx-2 rounded-md" disabled="true">Add a row</button>
+            <button class="__bind_add_row border-solid border-2 border-gray-600 p-2 mx-2 rounded-md" disabled="true">Add rows from form</button>
             <button class="__bind_test_button border-solid border-2 border-gray-600 p-2 mx-2 rounded-md">test</button>
             <button class="__bind_set_check border-solid border-2 border-gray-600 p-2 mx-2 rounded-md">Check checkbox</button>
             <button class="__bind_set_uncheck border-solid border-2 border-gray-600 p-2 mx-2 rounded-md">Uncheck</button>
@@ -98,12 +98,15 @@
                     {
                         "event": "click",
                         "fctn": (e) => {
-                            rows.push(
-                                {
-                                    "col1": new DOMrepeaterValue().set_value(Math.random().toString()),
-                                    "col2": new DOMrepeaterValue().set_value(Math.random().toString())
-                                }
-                            );
+                            const form_values = mutator.harvest();
+                            for (let n in form_values) {
+                                rows.push(
+                                    {
+                                        "col1":  new DOMrepeaterValue().set_value(n),
+                                        "col2":  new DOMrepeaterValue().set_value(JSON.stringify(form_values[n]))
+                                    }
+                                );
+                            }
                             mutator.set_repeater("table", rows).render();
                         }
                     }

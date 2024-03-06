@@ -1,0 +1,10 @@
+.env
+node_modules
+nightwatch/nightwatch/
+node_modules/
+nightwatch/.npm
+nightwatch/logs/
+nightwatch/test_output/
+nightwatch/nightwatch/
+nightwatch/tests_output/
+package-lock.json

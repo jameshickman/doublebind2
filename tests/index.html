@@ -2,7 +2,6 @@
 <html>
     <head>
         <title>Test</title>
-        <script src="../lib/doublebind_mutator.js"></script>
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
     <body class="font-sans p-5">
@@ -95,10 +94,11 @@
             </form>
         </div>
     </body>
-    <script>
+    <script type="module">
+        import {DOMrepeaterValue, DOMbinder} from "../lib/doublebind_mutator.js";
+
         const rows = [
             {
-                "col1": new DOMrepeaterValue().set_value("First column"),
                 "col2": new DOMrepeaterValue().set_value("Second column").set_class("highlighted")
             },
             {

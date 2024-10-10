@@ -15,9 +15,6 @@ This project provides a lightweight JavaScript library for two-way data binding 
 1. `DOMrepeaterValue`: A class for defining operations on repeater items.
 2. `DOMbinder`: The main class for managing the binding between data and DOM elements.
 
-## Installation
-[Instructions for installation would go here, e.g., npm package information or how to include the script in an HTML file]
-
 ## Usage
 
 ### Basic Setup

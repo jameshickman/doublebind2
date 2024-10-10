@@ -34,7 +34,110 @@ const binder = new DOMbinder(document.body, handlers, synonyms);
 
 ### Binding Data
 
-[... previous examples for setting values, manipulating classes, etc. ...]
+#### Setting Values
+```javascript
+// Set a simple value
+binder.set_value('elementName', 'New Value');
+
+// Set multiple values
+binder.set_value('firstName', 'John')
+      .set_value('lastName', 'Doe')
+      .set_value('age', 30);
+```
+
+#### Manipulating Classes
+```javascript
+// Add a class
+binder.set_class('elementName', 'new-class');
+
+// Remove a class
+binder.remove_class('elementName', 'old-class');
+
+// Add multiple classes
+binder.set_class('elementName', 'class1')
+      .set_class('elementName', 'class2');
+```
+
+#### Setting Custom Properties
+```javascript
+// Set a single property
+binder.set_properties('elementName', { disabled: true });
+
+// Set multiple properties
+binder.set_properties('customElement', {
+    customProp1: 'value1',
+    customProp2: 42,
+    'aria-label': 'Accessible Label'
+});
+```
+
+#### Setting Event Handlers
+```javascript
+// Define event handlers
+const handlers = {
+    buttonClick: [
+        {
+            event: 'click',
+            fctn: (e) => {
+                console.log('Button clicked!', e);
+            }
+        }
+    ],
+    inputChange: [
+        {
+            event: 'input',
+            fctn: (e) => {
+                console.log('Input changed:', e.target.value);
+            }
+        }
+    ]
+};
+
+// Initialize binder with handlers
+const binder = new DOMbinder(document.body, handlers);
+
+// The handlers will be automatically attached to elements with class __bind_buttonClick and __bind_inputChange
+```
+
+#### Using Repeaters
+```javascript
+// Set up a simple repeater
+binder.set_repeater('simpleList', [
+    new DOMrepeaterValue().set_value('Item 1'),
+    new DOMrepeaterValue().set_value('Item 2')
+]);
+
+// Set up a complex repeater with multiple operations
+binder.set_repeater('complexList', [
+    new DOMrepeaterValue()
+        .set_value('Item 1')
+        .set_class('active')
+        .set_handler('click', (e) => console.log('Clicked Item 1'))
+        .set_dataset({ id: '001' }),
+    new DOMrepeaterValue()
+        .set_value('Item 2')
+        .set_class('inactive')
+        .set_handler('click', (e) => console.log('Clicked Item 2'))
+        .set_dataset({ id: '002' })
+]);
+
+// Append to an existing repeater
+binder.set_repeater('simpleList', [
+    new DOMrepeaterValue().set_value('Item 3')
+], true);  // The `true` flag indicates append mode
+```
+
+### Rendering Changes
+```javascript
+// After setting up all bindings, render the changes
+binder.render();
+```
+
+### Harvesting Form Data
+```javascript
+const formData = binder.harvest();
+console.log(formData);
+```
 
 ### Custom Elements and Synonyms
 The synonyms support is particularly useful when working with custom elements that extend standard form elements. This allows the library to recognize and properly handle custom elements as if they were native form elements.
@@ -51,7 +154,22 @@ binder.set_value('customInput', 'Custom Value');
 
 This feature ensures that the library can work seamlessly with web components and other custom element implementations that extend standard form functionality.
 
-[... rest of the README content ...]
+## HTML Structure
+The library uses special classes to bind elements:
+- `__template`: For repeater templates
+- `__bind_[name]`: To bind elements to data
+- `__placeholder`: For elements to be removed when going live
+
+Example:
+```html
+<div class="__bind_complexList">
+    <div class="__template" data-name="listItemTemplate">
+        <span class="__bind_item"></span>
+    </div>
+</div>
+<button class="__bind_buttonClick">Click me</button>
+<input class="__bind_inputChange" type="text">
+```
 
 ## Advanced Features
 - Custom tag synonyms for compatibility with different frameworks and custom elements
